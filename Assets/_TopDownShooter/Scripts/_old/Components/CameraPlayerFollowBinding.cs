@@ -13,6 +13,7 @@ namespace _old.Components
         private void Construct(PlayerPawn pawn)
         {
             _virtualCamera.Follow = pawn.transform;
+            _virtualCamera.LookAt = pawn.transform;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _old.Components;
 using _old.Player;
 using UnityEngine;
 using Zenject;
@@ -9,13 +10,15 @@ namespace _old.Installers
     {
         [SerializeField] private PlayerPawn _playerPawnPrefab;
         [SerializeField] private Transform _playerSpawnPoint;
-        [SerializeField] private Transform _playerTargetPoint;
+        [SerializeField] private TargetPawn _playerTargetPoint;
 
         [SerializeField] private List<Transform> _enemiesSpawnPoint = new();
 
         public override void InstallBindings()
         {
             Application.targetFrameRate = 300;
+            
+            Container.Bind<TargetPawn>().FromInstance(_playerTargetPoint).AsSingle();
 
             var playerPawn = Container.InstantiatePrefabForComponent<PlayerPawn>(
                 _playerPawnPrefab,

@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "com.leopotam.ecslite": "https://github.com/Leopotam/ecslite.git",
+    "com.leopotam.ecslite.di": "https://github.com/Leopotam/ecslite-di.git",
+    "com.leopotam.ecslite.extendedsystems": "https://github.com/Leopotam/ecslite-extendedsystems.git",
+    "com.leopotam.ecslite.unityeditor": "https://github.com/Leopotam/ecslite-unityeditor.git",
     "com.unity.addressables": "1.19.19",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.characters-animation": "1.0.0",
@@ -14,7 +18,6 @@
     "com.unity.textmeshpro": "3.0.8",
     "com.unity.timeline": "1.6.5",
     "com.unity.ugui": "1.0.0",
-    "com.unity.visualscripting": "1.9.1",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

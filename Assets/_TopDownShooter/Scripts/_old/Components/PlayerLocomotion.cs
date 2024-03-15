@@ -7,10 +7,10 @@ namespace _old.Components
 {
     public class PlayerLocomotion : PawnComponent<PlayerPawn>
     {
+        [SerializeField]private float _velocity;
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _sprintSpeed = 8f;
         [SerializeField] private float _crouchSpeed = 2f;
-        [SerializeField] private float _maxVelocityChange = 10f;
         private bool _isCrouching;
         private bool _isSprinting;
 
@@ -19,6 +19,14 @@ namespace _old.Components
 
         private void Update()
         {
+            if (!_pawn.PlayerControls.Player.Movement.IsInProgress())
+            {
+                _pawn.Animator.SetBool(AnimationStatics.Idle, true);
+            }
+            else
+            {
+                _pawn.Animator.SetBool(AnimationStatics.Idle, false);
+            }
             UpdateAnimations();
             Move();
         }
@@ -36,6 +44,7 @@ namespace _old.Components
         {
             var direction = ctx.ReadValue<Vector2>();
             _movementDirection = new Vector3(direction.x, 0, direction.y);
+            
         }
 
         private void UnAssignMovement(InputAction.CallbackContext ctx)
@@ -63,24 +72,21 @@ namespace _old.Components
         {
             var animHor = Vector3.Dot(_movementDirection.normalized, transform.right);
             var animVer = Vector3.Dot(_movementDirection.normalized, transform.forward);
-            var dir = new Vector3(animHor, 0, animVer);
-            Debug.DrawLine(transform.position, transform.position + dir, Color.red);
 
-            _pawn.Animator.SetFloat(AnimationStatics.Vertical, animVer, .25f, Time.deltaTime);
-            _pawn.Animator.SetFloat(AnimationStatics.Horizontal, animHor, .25f, Time.deltaTime);
+            _pawn.Animator.SetFloat(AnimationStatics.Vertical, -animVer, .1f, Time.deltaTime);
+            _pawn.Animator.SetFloat(AnimationStatics.Horizontal, -animHor, .1f, Time.deltaTime);
         }
 
         private void Move()
         {
             var animHor = Vector3.Dot(_movementDirection.normalized, _pawn.PlayerCamera.transform.right);
-            var animVer = Vector3.Dot(_movementDirection.normalized, _pawn.PlayerCamera.transform.forward);
+            var animVer = Vector3.Dot(_movementDirection.normalized, _pawn.PlayerCamera.transform.up);
             var dir = new Vector3(animHor, 0, animVer);
 
-            var targetVelocity = Vector3.Lerp(Vector3.zero, dir, 1);
+            var direction = Vector3.Lerp(Vector3.zero, dir, _velocity * Time.deltaTime);
+            Debug.DrawLine(transform.position, transform.position + direction, Color.green);
 
-            Debug.DrawLine(transform.position, transform.position + targetVelocity, Color.red);
-
-            _pawn.transform.position += targetVelocity * (CurrentSpeed * Time.deltaTime);
+            _pawn.transform.position += direction * (CurrentSpeed * Time.deltaTime);
         }
 
         public override void Dispose()

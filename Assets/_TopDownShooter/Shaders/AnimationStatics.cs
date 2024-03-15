@@ -6,6 +6,7 @@ namespace Shaders
     {
         public static readonly int Vertical = Animator.StringToHash("Vertical");
         public static readonly int Horizontal = Animator.StringToHash("Horizontal");
+        public static readonly int Rotation = Animator.StringToHash("Rotation");
         public static readonly int Crouching = Animator.StringToHash("Crouching");
         public static readonly int Sprinting = Animator.StringToHash("Sprinting");
         public static readonly int Movement = Animator.StringToHash("Moving");

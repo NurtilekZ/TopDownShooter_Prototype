@@ -9,5 +9,7 @@ EditorBuildSettings:
     path: Assets/_TopDownShooter/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 20647efdf44de774dab863d64c295d38,
+      type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: e40e86e9c9db527439eee492fcdacf89,
       type: 2}
