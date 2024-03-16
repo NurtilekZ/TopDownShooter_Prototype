@@ -7,29 +7,18 @@ namespace _old.Components
 {
     public class PlayerLocomotion : PawnComponent<PlayerPawn>
     {
-        [SerializeField]private float _velocity;
+        [SerializeField] private float _velocity;
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _sprintSpeed = 8f;
         [SerializeField] private float _crouchSpeed = 2f;
+        [SerializeField] private float _animDamp = 2f;
         private bool _isCrouching;
         private bool _isSprinting;
 
         private Vector3 _movementDirection;
         private float CurrentSpeed => _isSprinting ? _sprintSpeed : _isCrouching ? _crouchSpeed : _moveSpeed;
-
-        private void Update()
-        {
-            if (!_pawn.PlayerControls.Player.Movement.IsInProgress())
-            {
-                _pawn.Animator.SetBool(AnimationStatics.Idle, true);
-            }
-            else
-            {
-                _pawn.Animator.SetBool(AnimationStatics.Idle, false);
-            }
-            UpdateAnimations();
-            Move();
-        }
+        
+        public Vector3 MoveDirection { get; private set; }
 
         public override void SetupPlayerInput()
         {
@@ -57,15 +46,31 @@ namespace _old.Components
             _isCrouching = !_isCrouching;
             _pawn.Animator.SetBool(AnimationStatics.Crouching, _isCrouching);
         }
+
         private void AssignSprint(InputAction.CallbackContext ctx)
         {
             _isSprinting = true;
             _pawn.Animator.SetBool(AnimationStatics.Sprinting, _isSprinting);
         }
+
         private void UnAssignSprint(InputAction.CallbackContext ctx)
         {
             _isSprinting = false;
             _pawn.Animator.SetBool(AnimationStatics.Sprinting, _isSprinting);
+        }
+
+        private void Update()
+        {
+            if (!_pawn.PlayerControls.Player.Movement.IsInProgress())
+            {
+                _pawn.Animator.SetBool(AnimationStatics.Idle, true);
+            }
+            else
+            {
+                _pawn.Animator.SetBool(AnimationStatics.Idle, false);
+            }
+            Move();
+            UpdateAnimations();
         }
 
         private void UpdateAnimations()
@@ -73,8 +78,8 @@ namespace _old.Components
             var animHor = Vector3.Dot(_movementDirection.normalized, transform.right);
             var animVer = Vector3.Dot(_movementDirection.normalized, transform.forward);
 
-            _pawn.Animator.SetFloat(AnimationStatics.Vertical, -animVer, .1f, Time.deltaTime);
-            _pawn.Animator.SetFloat(AnimationStatics.Horizontal, -animHor, .1f, Time.deltaTime);
+            _pawn.Animator.SetFloat(AnimationStatics.Vertical, -animVer, _animDamp, Time.deltaTime);
+            _pawn.Animator.SetFloat(AnimationStatics.Horizontal, -animHor, _animDamp, Time.deltaTime);
         }
 
         private void Move()
@@ -83,10 +88,8 @@ namespace _old.Components
             var animVer = Vector3.Dot(_movementDirection.normalized, _pawn.PlayerCamera.transform.up);
             var dir = new Vector3(animHor, 0, animVer);
 
-            var direction = Vector3.Lerp(Vector3.zero, dir, _velocity * Time.deltaTime);
-            Debug.DrawLine(transform.position, transform.position + direction, Color.green);
-
-            _pawn.transform.position += direction * (CurrentSpeed * Time.deltaTime);
+            MoveDirection = Vector3.Lerp(Vector3.zero, dir, _velocity * Time.deltaTime);
+            _pawn.transform.position += MoveDirection * (CurrentSpeed * Time.deltaTime);
         }
 
         public override void Dispose()
