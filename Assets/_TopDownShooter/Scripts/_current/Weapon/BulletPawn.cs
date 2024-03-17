@@ -16,8 +16,7 @@ namespace _old.Weapon
         private float _bulletDestroyTime;
         private WeaponData _weaponData;
 
-        public event Action<BulletPawn> OnDisabled;
-        public event Action<GameObject, Vector3> OnHit;
+        public event Action<BulletPawn, GameObject, Vector3> OnHit;
 
         public void SetupBullet(WeaponData weaponCmp, Transform aimTransform)
         {
@@ -52,15 +51,9 @@ namespace _old.Weapon
 
         private void OnTriggerEnter(Collider other)
         {
-            OnHit?.Invoke(other.gameObject, transform.position);
+            OnHit?.Invoke(this, other.gameObject, transform.position);
             gameObject.SetActive(false);
-        }
-
-        private void OnDisable()
-        {
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.Sleep();
-            OnDisabled?.Invoke(this);
+            _rigidbody.isKinematic = true;
         }
     }
 }

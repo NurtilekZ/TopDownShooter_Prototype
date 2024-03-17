@@ -33,17 +33,17 @@ namespace _old.Components
         {
             SetCollidersEnabled(false);
             SetRBKinematic(true);
-            
-            _collider.enabled = true;
-            _rigidbody.isKinematic = false;
-            _animator.enabled = true;
+
+            if (_collider) _collider.enabled = true;
+            if (_rigidbody) _rigidbody.isKinematic = false;
+            if (_rigidbody) _animator.enabled = true;
         }
 
         public void ActivateRagdoll()
         {
-            _collider.enabled = false;
-            _rigidbody.isKinematic = true;
-            _animator.enabled = false;
+            if (_collider) _collider.enabled = false;
+            if (_rigidbody) _rigidbody.isKinematic = false;
+            if (_rigidbody) _animator.enabled = false;
             
             SetCollidersEnabled(true);
             SetRBKinematic(false);

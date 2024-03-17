@@ -1,5 +1,4 @@
 ﻿using _old.Player;
-using DG.Tweening;
 using Shaders;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -10,24 +9,25 @@ namespace _old.Components
 {
     public class PlayerRotation : PawnComponent<PlayerPawn>
     {
-        [SerializeField] private float _followSpeed = 2f;
-        [SerializeField] private float _lookForwardDelay = 2f;
+        [SerializeField] private float _rotationSmoothTime = 0.12f;
         [SerializeField] private float _maxRange;
         [SerializeField] private float _minRange;
-        [SerializeField] private float _animDamp;
         [SerializeField] private float _maxTargetDistance;
         [SerializeField] private Transform _targetTransform;
         [SerializeField] private LayerMask _aimLayerMask;
-        [SerializeField] private MultiAimConstraint _multiAimConstraint;
+        [SerializeField] private MultiAimConstraint _weaponAimConstraint;
         [SerializeField] private RectTransform _crosshairImage;
-        [SerializeField] private PlayerLocomotion _playerLocomotion;
-        
-        [SerializeField] private bool _rotate;
+        [SerializeField] private PlayerMovement _playerMovement;
+
+        [field: SerializeField] public bool IsRotating { get; private set; }
+
+        private Vector3 _rotationInput;
+        private float _angle;
+        private bool _isIdleRotate;
         
         private Vector3 _rotationDirection;
-        private float _angle;
-        private float _lookForwardTime;
-        private Vector3 _direction;
+        private float _targetRotation = 0.0f;
+        private float _rotationVelocity;
 
         [Inject]
         public void Construct(TargetPawn targetPoint, CrosshairUI crosshair)
@@ -39,7 +39,7 @@ namespace _old.Components
         public override void SetupPlayerInput()
         {
             _pawn.PlayerControls.Player.Rotation.performed += AssignRotation;
-            _multiAimConstraint.data.sourceObjects.SetTransform(0, _targetTransform);
+            _weaponAimConstraint.data.sourceObjects.SetTransform(0, _targetTransform);
             _pawn.BuildRig();
         }
 
@@ -48,7 +48,7 @@ namespace _old.Components
             if (ctx.control.device == Gamepad.current)
             {
                 var direction = ctx.ReadValue<Vector2>() * _maxTargetDistance;
-                _rotationDirection = new Vector3(direction.x, 1, direction.y);
+                _rotationInput = new Vector3(direction.x, 1, direction.y);
             }
             
             if (ctx.control.device == Mouse.current)
@@ -56,9 +56,9 @@ namespace _old.Components
                 var ray = _pawn.PlayerCamera.ScreenPointToRay(ctx.ReadValue<Vector2>());
                 if (Physics.Raycast(ray, out var hit, _aimLayerMask))
                 {
-                    _rotationDirection = hit.point;
-                    _rotationDirection -= transform.position;
-                } 
+                    _rotationInput = hit.point;
+                    _rotationInput -= transform.position;
+                }
             }
         }
 
@@ -70,29 +70,25 @@ namespace _old.Components
 
         private void AnimateRotation()
         {
-            if (_pawn.Animator.GetBool(AnimationStatics.Idle))
+            if (_playerMovement.IsIdle)
             {
-                var dir = Quaternion.AngleAxis(_angle, _pawn.transform.up) * _pawn.transform.forward;
-
-                _pawn.Animator.SetFloat(AnimationStatics.Rotation, _angle, _animDamp, Time.deltaTime);
-                Debug.DrawLine(_pawn.transform.position, _pawn.transform.position + dir * 10, Color.cyan);
+                _pawn.Animator.SetFloat(AnimationStatics.Rotation, _angle);
             }
         }
 
         private void AimToTarget()
         {
             _crosshairImage.position = Mouse.current.position.value;
-            var dis = _rotationDirection + transform.position;
-
-            _targetTransform.position = dis;
-            var distance = Vector3.Distance(_rotationDirection, _pawn.transform.position);
+            _rotationDirection = transform.position + _rotationInput;
+            _targetTransform.position = _rotationDirection;
+            var distance = Vector3.Distance(_rotationInput, transform.position);
 
             if (distance > 1)
             {
                 CalculateAngle();
-                if (_pawn.Animator.GetBool(AnimationStatics.Idle))
+                if (_playerMovement.IsIdle)
                 {
-                    RotateIdle();
+                    RotateDecorIdle();
                 }
                 else
                 {
@@ -103,38 +99,49 @@ namespace _old.Components
 
         private void CalculateAngle()
         {
-            var forward = _pawn.transform.forward.normalized;
-            var rotation = _rotationDirection.normalized;
+            var forward = transform.forward.normalized;
+            var rotation = _rotationInput.normalized;
             forward.y = 0;
             rotation.y = 0;
             _angle = Vector3.SignedAngle(forward, rotation, Vector3.up);
             _angle = Mathf.Clamp(_angle, -90, 90);
+            _angle = Mathf.Round(_angle * 1000f) / 1000f;
+        }
+
+        private void RotateDecorIdle()
+        {
+            if (Mathf.Abs(_angle) > _maxRange)
+            {
+                _isIdleRotate = true;
+            }
+            if (Mathf.Abs(_angle) < _minRange)
+            {
+                _isIdleRotate = false;
+            }
+
+            if (_isIdleRotate)
+            {
+                Rotate();
+            }
         }
 
         private void Rotate()
         {
-            _direction = Quaternion.AngleAxis(_angle, Vector3.up) * _pawn.transform.forward;
-            _direction.y = 0;
-            var rotation = Quaternion.LookRotation(_direction, Vector3.up);
-            var rot = Quaternion.RotateTowards(_pawn.transform.rotation, rotation, _followSpeed * Time.deltaTime);
-            _pawn.transform.rotation = rot;
+            if (_pawn.PlayerControls.Player.Rotation.IsInProgress())
+            {
+                var rotationInput = _rotationInput.normalized;
+                _targetRotation = Mathf.Atan2(rotationInput.x, rotationInput.z) * Mathf.Rad2Deg;
+                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                    _rotationSmoothTime);
+                
+                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            }
         }
 
-        private void RotateIdle()
+        private void OnDrawGizmos()
         {
-            if (Mathf.Abs(_angle) > _maxRange)
-            {
-                _rotate = true;
-            }
-            if (Mathf.Abs(_angle) < _minRange)
-            {
-                _rotate = false;
-            }
-
-            if (_rotate)
-            {
-                Rotate();
-            }
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, _rotationInput * 2);
         }
 
         public override void Dispose()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 698313671658902134}
   - component: {fileID: 698313671658902135}
   - component: {fileID: 698313671658902408}
-  - component: {fileID: 3099595787927316625}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -50,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 3351980734079755965}
   _rigBuilder: {fileID: 3351980734072108743}
+  <PlayerCamera>k__BackingField: {fileID: 0}
 --- !u!114 &698313671658902135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,10 +62,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032b6b14161e41f4290bc9c881ab8279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _velocity: 60
+  _controller: {fileID: 0}
   _moveSpeed: 5
   _sprintSpeed: 8
   _crouchSpeed: 2
+  _speedChangeRate: 8
+  _rotationSmoothTime: 8
+  _animDamp: 2
+  _landingAudioClip: {fileID: 0}
+  _footstepAudioClips: []
+  _footstepAudioVolume: 0.5
+  _jumpHeight: 1.2
+  _gravity: -15
+  _jumpTimeout: 0.5
+  _fallTimeout: 0.15
+  _isGrounded: 1
+  _groundedOffset: -0.14
+  _groundedRadius: 0.28
+  _groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &698313671658902408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,27 +94,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2c98bf6e8c4d15bfa35c395a29a556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 150
+  _followSpeed: 2
+  _lookForwardDelay: 2
+  _maxRange: 0
+  _minRange: 0
+  _animDamp: 0
   _maxTargetDistance: 1
   _targetTransform: {fileID: 0}
   _aimLayerMask:
     serializedVersion: 2
     m_Bits: 19
   _multiAimConstraint: {fileID: 6460679115856327140}
---- !u!136 &3099595787927316625
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698313671658902409}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  _crosshairImage: {fileID: 0}
+  _playerLocomotion: {fileID: 0}
+  _rotate: 0
 --- !u!1 &698313672599714681
 GameObject:
   m_ObjectHideFlags: 0

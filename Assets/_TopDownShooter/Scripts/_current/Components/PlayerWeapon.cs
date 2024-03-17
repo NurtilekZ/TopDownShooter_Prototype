@@ -16,13 +16,14 @@ namespace _old.Components
         [SerializeField] private TwoBoneIKConstraint _constraintR;
         [SerializeField] private TwoBoneIKConstraint _constraintL;
         [SerializeField] private MultiAimConstraint[] _aimConstraints;
+        [SerializeField] private WeaponPawn _weaponPawn;
         
-        private WeaponPawn _weaponPawn;
+        private bool isFiring;
 
         protected override void Start()
         {
             base.Start();
-            _pawn.Animator.runtimeAnimatorController = _weaponPawn.ReloadAnimTrigger;
+            _pawn.Animator.runtimeAnimatorController = _weaponPawn.AnimOverride;
             _constraintR.data.target = _weaponPawn.RightArmConstraints;
             _constraintL.data.target = _weaponPawn.LeftArmConstraints;
             _rigBuilder.Build();
@@ -67,7 +68,6 @@ namespace _old.Components
         private void AnimateOnFire()
         {
             _pawn.Animator.SetTrigger(AnimationStatics.Shoot);
-            SoundFX.PlaySoundAtPoint(_weaponPawn.ShootSound, _weaponPawn.transform.position);
         }
 
         private void AnimateReload()
@@ -83,7 +83,8 @@ namespace _old.Components
 
         private void SetWeaponWeightsActive(bool active)
         {
-            foreach (var constraint in _aimConstraints) constraint.weight = active ? 1 : 0;
+            foreach (var constraint in _aimConstraints) 
+                constraint.weight = active ? 1 : 0;
             _constraintR.weight = active ? 1 : 0;
             _constraintL.weight = active ? 1 : 0;
         }

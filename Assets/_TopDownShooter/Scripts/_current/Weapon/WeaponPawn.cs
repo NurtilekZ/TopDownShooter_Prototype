@@ -5,6 +5,7 @@ using _old.Data;
 using _old.Properties;
 using _old.Sound;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace _old.Weapon
 {
@@ -23,12 +24,11 @@ namespace _old.Weapon
         private Coroutine _reloadCoroutine;
         private bool _canFire = true;
         private Coroutine _canFireCoroutine;
-        private Queue<BulletPawn> _ammoQueue = new Queue<BulletPawn>();
+        private ObjectPool<BulletPawn> _ammoQueue;
+        
         public Transform RightArmConstraints => _rightArmConstraints;
         public Transform LeftArmConstraints => _leftArmConstraints;
-        public AnimatorOverrideController ReloadAnimTrigger => _weaponData.WeaponAnimOverride;
-        public AudioClip ShootSound => _weaponData.ShootSound;
-        public Transform AimTransform => _aimTransform;
+        public AnimatorOverrideController AnimOverride => _weaponData.WeaponAnimOverride;
         public virtual event Action OnFire;
         public virtual event Action OnStopFire;
         public virtual event Action OnReload;
@@ -36,29 +36,28 @@ namespace _old.Weapon
         
         protected virtual void Start()
         {
+            _ammoQueue = new ObjectPool<BulletPawn>(() => Instantiate(bulletPawnPrefab));
             _currentAmmoCount = _weaponData.AmmoCount;
-            for (int i = 0; i < _currentAmmoCount; i++)
-            {
-                var bulletView = Instantiate(bulletPawnPrefab, transform);
-                bulletView.gameObject.SetActive(false);
-                bulletView.OnDisabled += PushBullet;
-                bulletView.OnHit += OnBulletHit;
-                PushBullet(bulletView);
-            }
-        }
-
-        protected virtual void PushBullet(BulletPawn bulletPawn)
-        {
-            _ammoQueue.Enqueue(bulletPawn);
         }
 
         public virtual void Fire()
         {
             if (_isReloading) return;
             if (!_canFire) return;
-            FireBullet();
+
+            Ray ray = new Ray();
+            RaycastHit raycastHit;
+            ray.origin = _aimTransform.position;
+            ray.direction = _aimTransform.forward;
+            if (Physics.Raycast(ray, out raycastHit))
+            {
+                Debug.DrawLine(ray.origin, raycastHit.point, Color.green, 1.0f);
+            }
+            
+            // FireBullet();
             _isFiring = true;
             ShowMuzzleFlash();
+            SoundFX.PlaySoundAtPoint(_weaponData.ShootSound, transform.position);
             OnFire?.Invoke();
             _canFire = false;
             
@@ -82,11 +81,13 @@ namespace _old.Weapon
         private void FireBullet()
         {
             _currentAmmoCount--;
-            var bullet = _ammoQueue.Dequeue();
+            var bullet = _ammoQueue.Get();
+            bullet.OnHit += OnBulletHit;
+            bullet.gameObject.SetActive(true);
             bullet.SetupBullet(_weaponData, _aimTransform);
         }
 
-        protected void OnBulletHit(GameObject other, Vector3 hitPosition)
+        protected void OnBulletHit(BulletPawn bulletPawn, GameObject other, Vector3 hitPosition)
         {
             if (other.TryGetComponent<IDamageable>(out var target))
             {
@@ -96,8 +97,11 @@ namespace _old.Weapon
             {
                 DoSurfaceHitFX(other, hitPosition);
             }
+            
+            bulletPawn.OnHit -= OnBulletHit;
+            _ammoQueue.Release(bulletPawn);
         }
-
+        
         public override void DoDamage(IDamageable target, float damage)
         {
             base.DoDamage(target, damage);
@@ -139,11 +143,8 @@ namespace _old.Weapon
 
         public override void Dispose()
         {
-            foreach (var bulletView in _ammoQueue)
-            {
-                bulletView.OnDisabled -= PushBullet;
-                bulletView.OnHit -= OnBulletHit;
-            }
+            _ammoQueue.Clear();
+            _ammoQueue.Dispose();
             base.Dispose();
         }
     }
@@ -158,14 +159,6 @@ namespace _old.Weapon
         private void Start()
         {
             _currentAmmoCount = _weaponData.AmmoCount;
-            for (int i = 0; i < _currentAmmoCount; i++)
-            {
-                var bulletView = Instantiate(bulletPawnPrefab, transform);
-                bulletView.gameObject.SetActive(false);
-                bulletView.OnDisabled += PushBullet;
-                bulletView.OnHit += OnBulletHit;
-                PushBullet(bulletView);
-            }
         }
     }
 }
