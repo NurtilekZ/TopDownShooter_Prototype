@@ -16,6 +16,7 @@ namespace _old.Components
         [SerializeField] private float _dampTime = .1f;
         [SerializeField] private float _movementSmoothTime = 0.12f;
         [SerializeField] private float _lookForwardTimeout = 2f;
+        [field:SerializeField] public bool IsIdle { get; private set; }
         
         [Space(10)]
         [SerializeField] private  AudioClip _landingAudioClip;
@@ -48,26 +49,28 @@ namespace _old.Components
         
         private bool _isSprinting;
         private bool _isJumping;
-        
+
+
         // player
         private Vector3 _movementVelocity;
+        private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         private float _targetRotation = 0.0f;
         private float _lookForwardTimeoutDelta;
+        private float _rotationSmoothTime = .12f;
 
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
-        private Vector3 _movementInput;
+        private Vector2 _movementInput;
         private Vector3 _smoothMovement;
         private float CurrentSpeed => _isSprinting ? _sprintSpeed : _moveSpeed;
         
-        public bool IsIdle { get; private set; }
         public Vector3 MoveDirection { get; private set; }
-
+        
         protected override void Start()
         {
             base.Start();
@@ -89,7 +92,7 @@ namespace _old.Components
         private void AssignMovement(InputAction.CallbackContext ctx)
         {
             var direction = ctx.ReadValue<Vector2>();
-            _movementInput = new Vector3(direction.x, 0, direction.y);
+            _movementInput = direction;
         }
 
         private void UnAssignMovement(InputAction.CallbackContext ctx)
@@ -106,17 +109,18 @@ namespace _old.Components
         {
             _isSprinting = true;
             _pawn.Animator.SetBool(AnimationStatics.Sprinting, _isSprinting);
+            _pawn.Animator.SetFloat(AnimationStatics.MotionSpeed, 1.5f);
         }
 
         private void UnAssignSprint(InputAction.CallbackContext ctx)
         {
             _isSprinting = false;
             _pawn.Animator.SetBool(AnimationStatics.Sprinting, _isSprinting);
+            _pawn.Animator.SetFloat(AnimationStatics.MotionSpeed, 1);
         }
 
         private void Update()
         {
-            HandleInput();
             HandleIdleState();
             JumpAndGravity();
             GroundedCheck();
@@ -128,8 +132,6 @@ namespace _old.Components
         {
             IsIdle = !_pawn.PlayerControls.Player.Movement.IsInProgress();
             _pawn.Animator.SetBool(AnimationStatics.Idle, IsIdle);
-            _movementInput = IsIdle ? Vector3.zero : _movementInput;
-            MoveDirection = IsIdle ? Vector3.zero : MoveDirection;
         }
 
         private void GroundedCheck()
@@ -144,69 +146,31 @@ namespace _old.Components
             _pawn.Animator.SetBool(AnimationStatics.Grounded, _isGrounded);
         }
 
-        private void HandleInput()
-        {
-            float horizontal = _movementInput.normalized.x;
-            float vertical = _movementInput.normalized.z;
- 
-            var direction = IsIdle ? Vector3.zero : new Vector3(horizontal, 0, vertical);
-            direction = direction.normalized;
-            
-            //CONVERT direction from local to world relative to camera
-            var cameraRelativeDirection = _pawn.PlayerCamera.transform.TransformDirection(direction).normalized;
-            
-            _smoothMovement = Vector3.SmoothDamp(_smoothMovement, cameraRelativeDirection, ref _movementVelocity, _movementSmoothTime * Time.deltaTime);
-            _smoothMovement.y = 0;
-            _smoothMovement = _smoothMovement.normalized;
-        }
-
         private void Move()
         {
-            if (IsIdle) return;
+            if (!IsIdle)
+            {
+                _lookForwardTimeoutDelta = _lookForwardTimeout;
+            }
             
-            _lookForwardTimeoutDelta = _lookForwardTimeout;
+            var rightNormalized = _pawn.PlayerCamera.transform.right;
+            var upNormalized = _pawn.PlayerCamera.transform.up;
+            rightNormalized.y = 0;
+            upNormalized.y = 0;
             
-            _controller.Move(_smoothMovement * (CurrentSpeed * Time.deltaTime));
+            MoveDirection = IsIdle ? Vector3.zero : _movementInput.x * rightNormalized + _movementInput.y * upNormalized;
             
-            // var moveHor = Vector3.Dot(_movementInput.normalized, _pawn.PlayerCamera.transform.right.normalized);
-            // var moveVer = Vector3.Dot(_movementInput.normalized, _pawn.PlayerCamera.transform.up.normalized);
-            //
-            // MoveDirection = new Vector3(moveHor, 0, moveVer);
-            // _controller.Move(MoveDirection * (CurrentSpeed * Time.deltaTime) +
-            //                  new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
+            _smoothMovement = Vector3.SmoothDamp(_smoothMovement, MoveDirection.normalized, ref _movementVelocity, _movementSmoothTime);
+            _smoothMovement.y = 0;
             
-            // if (!_pawn.PlayerControls.Player.Rotation.IsInProgress())
-            // {
-            //     if (_lookForwardTimeoutDelta <= 0f)
-            //     {
-            //         _targetRotation = Mathf.Atan2(moveHor, moveVer) *
-            //                           Mathf.Rad2Deg +
-            //                           _pawn.PlayerCamera.transform.eulerAngles.y;
-            //         float rota = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-            //             _rotationSmoothTime);
-            //
-            //         // rotate to face input direction relative to camera position
-            //         transform.rotation = Quaternion.Euler(0.0f, rota, 0.0f);
-            //     }
-            //     else if (_lookForwardTimeoutDelta >= 0f)
-            //     {
-            //         _lookForwardTimeoutDelta -= Time.deltaTime;
-            //     }
-            // }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + _smoothMovement * CurrentSpeed);
+            _controller.Move(_smoothMovement * (CurrentSpeed * Time.deltaTime) +
+                             new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
         }
 
         private void UpdateAnimations()
         {
-            float animVer = 0, animHor = 0;
-            
-            animHor = Vector3.Dot(IsIdle ? Vector3.zero : _smoothMovement.normalized, transform.right.normalized);
-            animVer = Vector3.Dot(IsIdle ? Vector3.zero : _smoothMovement.normalized, transform.forward.normalized);
+            var animHor = Vector3.Dot(IsIdle ? Vector3.zero : _smoothMovement.normalized, transform.right.normalized);
+            var animVer = Vector3.Dot(IsIdle ? Vector3.zero : _smoothMovement.normalized, transform.forward.normalized);
 
             _pawn.Animator.SetFloat(AnimationStatics.Horizontal, animHor, _dampTime, Time.deltaTime);
             _pawn.Animator.SetFloat(AnimationStatics.Vertical, animVer, _dampTime, Time.deltaTime);
@@ -256,6 +220,12 @@ namespace _old.Components
             {
                 _verticalVelocity += _gravity * Time.deltaTime;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + _smoothMovement * CurrentSpeed);
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

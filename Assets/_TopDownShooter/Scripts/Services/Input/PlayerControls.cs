@@ -90,9 +90,9 @@ namespace Services.Input
                 {
                     ""name"": ""WASD keys"",
                     ""id"": ""8c1d3733-3ad0-4cff-88e5-c9e8cb25fc3b"",
-                    ""path"": ""2DVector(mode=1)"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""Movement"",
                     ""isComposite"": true,

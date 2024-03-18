@@ -9,16 +9,19 @@ namespace _old.Components
     public class CameraPlayerFollowBinding : MonoBehaviour
     {
         [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+        [SerializeField] private Transform _target;
         [SerializeField] private float _minOffsetZ;
         [SerializeField] private float _maxOffsetZ;
         [SerializeField] private float _minOffsetX;
         [SerializeField] private float _maxOffsetX;
-        [SerializeField] private float _cameraMoveSpeedX;
-        [SerializeField] private float _cameraMoveSpeedZ;
+        [SerializeField] private float _cameraMoveSpeed;
+        [SerializeField] private float _cameraSmoothTime;
         
         private CinemachineTransposer _transposer;
         private float _offsetZ;
         private float _offsetY;
+        private Vector3 _movementVelocity;
+        private Vector3 _smooth;
 
         [Inject]
         private void Construct(PlayerPawn pawn, TargetPawn targetPawn)
@@ -36,13 +39,11 @@ namespace _old.Components
 
         private void LateUpdate()
         {
-            var offset = _virtualCamera.m_Follow.position - _virtualCamera.LookAt.position;
+            var offset = _virtualCamera.m_Follow.position - _target.position;
             
-            var animHor = Mathf.Clamp(Vector3.Dot(offset, transform.right) * _cameraMoveSpeedX, _minOffsetX,_maxOffsetX);
-            var animVer = Mathf.Clamp(Vector3.Dot(offset, transform.forward) * _cameraMoveSpeedZ, _minOffsetZ,_maxOffsetZ);
-            var off = new Vector3(animVer, _offsetY,_offsetZ + animHor);
+            _smooth = Vector3.SmoothDamp(_smooth, offset, ref _movementVelocity, _cameraSmoothTime);
 
-            _transposer.m_FollowOffset = off;
+            _transposer.m_FollowOffset = _smooth * (_cameraMoveSpeed * Time.deltaTime);
         }
     }
 }
