@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ammoCount: 30
   _aimDelayTime: 0.5
-  _fireIntervalTime: 0.5
+  _fireIntervalTime: 0.1
   _damage: 10
   _reloadTime: 2
   _bulletSpeed: 200
