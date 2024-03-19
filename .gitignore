@@ -73,3 +73,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/_TopDownShooter/Scripts/_new
 /Assets/_TopDownShooter/Scripts/_unused_ecs
+/Assets/_TopDownShooter/Scripts/_unused_ecs
