@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using _old.Data;
-using _old.Properties;
-using _old.Sound;
+using _current.Data;
+using _current.Properties;
+using _current.Sound;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace _old.Weapon
+namespace _current.Weapon
 {
     public abstract class WeaponPawnBase : DamageSender
     {
