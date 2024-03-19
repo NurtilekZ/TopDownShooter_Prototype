@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityTechnologies.ParticlePack.Shared.Ramps.Runtime;
 
 
-    [CustomEditor(typeof(RampAsset))]
+[CustomEditor(typeof(RampAsset))]
     public class RampAssetEditor : Editor
     {
         public override void OnInspectorGUI()

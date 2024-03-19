@@ -1,14 +1,13 @@
 ﻿using System.Collections;
-using _old.Player;
-using _old.Sound;
-using _old.Weapon;
+using _current.Player;
+using _current.Weapon;
 using Shaders;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using Zenject;
 
-namespace _old.Components
+namespace _current.Components
 {
     public class PlayerWeapon : PawnComponent<PlayerPawn>
     {
@@ -39,9 +38,16 @@ namespace _old.Components
             _weaponPawn.OnEndReload += ResetWeights;
         }
 
-        public override void SetupPlayerInput()
+        public override void BindPlayerInput()
         {
+            if (_pawn.PlayerControls == null) return;
             _pawn.PlayerControls.Player.Attack.performed += AssignAttack;
+        }
+
+        public override void UnbindPlayerInput()
+        {
+            if (_pawn.PlayerControls == null) return;
+            _pawn.PlayerControls.Player.Attack.performed -= AssignAttack;
         }
 
         private void AssignAttack(InputAction.CallbackContext ctx)

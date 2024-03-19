@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _old.Components
+namespace _current.Components
 {
     public class RagDollController : MonoBehaviour
     {

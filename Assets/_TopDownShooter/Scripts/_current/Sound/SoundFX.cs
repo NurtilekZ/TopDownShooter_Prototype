@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using _old.Data;
+using _current.Data;
 using UnityEngine;
 
-namespace _old.Sound
+namespace _current.Sound
 {
     [CreateAssetMenu(menuName = "Sound", fileName = "SoundLibrary")]
     public class SoundFX : ScriptableObject

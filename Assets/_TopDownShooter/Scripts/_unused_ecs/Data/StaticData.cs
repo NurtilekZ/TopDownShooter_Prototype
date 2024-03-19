@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Data
+namespace _unused_ecs.Data
 {
     [CreateAssetMenu]
     public class StaticData : ScriptableObject

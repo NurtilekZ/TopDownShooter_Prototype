@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Client.Components
+namespace _unused_ecs.Components
 {
     public class Player
     {

@@ -1,8 +1,8 @@
-﻿using _old.Weapon;
+﻿using _current.Weapon;
 using UnityEngine;
 using Zenject;
 
-namespace _old.Installers
+namespace _current.Installers
 {
     public class PlayerWeaponInstaller : MonoInstaller
     {

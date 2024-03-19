@@ -4,7 +4,7 @@ using Cinemachine;
 using UnityEngine;
 using Zenject;
 
-namespace _old.Services
+namespace _current.Services
 {
     public class CameraService : ICameraService, IInitializable
     {

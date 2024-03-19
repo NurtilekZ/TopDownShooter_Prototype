@@ -1,8 +1,8 @@
-﻿using Data;
+﻿using _unused_ecs.Data;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace Client.Systems
+namespace _unused_ecs.Systems
 {
     public class PlayerInitSystem : IEcsInitSystem
     {

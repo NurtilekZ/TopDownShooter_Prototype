@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using _old.Components;
-using _old.Player;
+using _current.Components;
+using _current.Player;
 using UnityEngine;
 using Zenject;
 
-namespace _old.Installers
+namespace _current.Installers
 {
     public class LocationInstaller : MonoInstaller
     {

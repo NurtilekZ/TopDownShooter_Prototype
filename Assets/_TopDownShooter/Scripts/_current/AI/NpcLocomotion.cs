@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using _old.Properties;
+using _current.Properties;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _old.AI
+namespace _current.AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class NpcLocomotion : DamagablePawn

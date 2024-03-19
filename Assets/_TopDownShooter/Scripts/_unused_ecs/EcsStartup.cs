@@ -1,9 +1,9 @@
-using Data;
+using _unused_ecs.Data;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
-namespace Client {
+namespace _unused_ecs {
     sealed class EcsStartup : MonoBehaviour
     {
         public Data.StaticData configuration;

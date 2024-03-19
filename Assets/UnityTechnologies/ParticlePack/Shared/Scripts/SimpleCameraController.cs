@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityTemplateProjects
+namespace UnityTechnologies.ParticlePack.Shared.Scripts
 {
     public class SimpleCameraController : MonoBehaviour
     {

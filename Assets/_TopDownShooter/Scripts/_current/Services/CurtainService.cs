@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _old.Services
+namespace _current.Services
 {
     public class CurtainService : MonoBehaviour
     {

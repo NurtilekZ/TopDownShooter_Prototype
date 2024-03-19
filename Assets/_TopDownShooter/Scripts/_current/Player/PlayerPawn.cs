@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using Zenject;
 
-namespace _old.Player
+namespace _current.Player
 {
     public class PlayerPawn : BasePawn
     {

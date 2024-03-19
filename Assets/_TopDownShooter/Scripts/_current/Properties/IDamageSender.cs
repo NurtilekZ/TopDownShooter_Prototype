@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _old.Properties
+namespace _current.Properties
 {
     public interface IDamageSender : IDisposable
     {

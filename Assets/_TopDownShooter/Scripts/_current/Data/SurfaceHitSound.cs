@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _old.Data
+namespace _current.Data
 {
     [CreateAssetMenu(menuName = "Sound", fileName = "SurfaceHitSound")]
     [Serializable]

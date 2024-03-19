@@ -1,10 +1,9 @@
-﻿using System;
-using _old.Player;
+﻿using _current.Player;
 using Cinemachine;
 using UnityEngine;
 using Zenject;
 
-namespace _old.Components
+namespace _current.Components
 {
     public class CameraPlayerFollowBinding : MonoBehaviour
     {

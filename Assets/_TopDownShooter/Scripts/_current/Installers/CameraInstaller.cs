@@ -1,8 +1,8 @@
-﻿using _old.Components;
+﻿using _current.Components;
 using UnityEngine;
 using Zenject;
 
-namespace _old.Installers
+namespace _current.Installers
 {
     public class CameraInstaller : MonoInstaller
     {

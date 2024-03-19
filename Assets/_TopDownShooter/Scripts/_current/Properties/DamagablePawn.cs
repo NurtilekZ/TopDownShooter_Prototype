@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _old.Properties
+namespace _current.Properties
 {
     public abstract class DamagablePawn : MonoBehaviour, IDamageable
     {

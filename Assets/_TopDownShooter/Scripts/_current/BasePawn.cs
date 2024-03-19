@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _old
+namespace _current
 {
     public abstract class BasePawn : MonoBehaviour, IDisposable
     {
