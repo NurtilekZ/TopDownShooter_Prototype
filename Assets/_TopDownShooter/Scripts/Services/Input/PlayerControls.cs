@@ -49,12 +49,12 @@ namespace Services.Input
                 },
                 {
                     ""name"": ""Rotation"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""571c404d-812c-463a-97e1-3d17cd858cce"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
@@ -69,6 +69,15 @@ namespace Services.Input
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""520df176-a67b-4953-bb42-09ab37983a78"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Walking"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e9f5ed0-0ac5-4597-a3aa-2528d359933f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -92,7 +101,7 @@ namespace Services.Input
                     ""id"": ""8c1d3733-3ad0-4cff-88e5-c9e8cb25fc3b"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Movement"",
                     ""isComposite"": true,
@@ -229,6 +238,28 @@ namespace Services.Input
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa0272da-c802-4ac4-bcb9-49e281d8fca9"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Walking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90451690-d1a3-46f3-b833-018f65d59102"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Walking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +301,7 @@ namespace Services.Input
             m_Player_Rotation = m_Player.FindAction("Rotation", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+            m_Player_Walking = m_Player.FindAction("Walking", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -336,6 +368,7 @@ namespace Services.Input
         private readonly InputAction m_Player_Rotation;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Sprint;
+        private readonly InputAction m_Player_Walking;
         public struct PlayerActions
         {
             private @PlayerControls m_Wrapper;
@@ -345,6 +378,7 @@ namespace Services.Input
             public InputAction @Rotation => m_Wrapper.m_Player_Rotation;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+            public InputAction @Walking => m_Wrapper.m_Player_Walking;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -369,6 +403,9 @@ namespace Services.Input
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @Walking.started += instance.OnWalking;
+                @Walking.performed += instance.OnWalking;
+                @Walking.canceled += instance.OnWalking;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -388,6 +425,9 @@ namespace Services.Input
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
+                @Walking.started -= instance.OnWalking;
+                @Walking.performed -= instance.OnWalking;
+                @Walking.canceled -= instance.OnWalking;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -430,6 +470,7 @@ namespace Services.Input
             void OnRotation(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
+            void OnWalking(InputAction.CallbackContext context);
         }
     }
 }

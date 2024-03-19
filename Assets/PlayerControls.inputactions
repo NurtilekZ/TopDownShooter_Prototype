@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "Rotation",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "571c404d-812c-463a-97e1-3d17cd858cce",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -45,6 +45,15 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "520df176-a67b-4953-bb42-09ab37983a78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Walking",
+                    "type": "Button",
+                    "id": "1e9f5ed0-0ac5-4597-a3aa-2528d359933f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -68,7 +77,7 @@
                     "id": "8c1d3733-3ad0-4cff-88e5-c9e8cb25fc3b",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "NormalizeVector2",
+                    "processors": "",
                     "groups": "",
                     "action": "Movement",
                     "isComposite": true,
@@ -203,6 +212,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa0272da-c802-4ac4-bcb9-49e281d8fca9",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard+Mouse",
+                    "action": "Walking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90451690-d1a3-46f3-b833-018f65d59102",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Walking",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

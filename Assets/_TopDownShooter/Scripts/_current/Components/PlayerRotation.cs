@@ -1,11 +1,11 @@
-﻿using _old.Player;
+﻿using _current.Player;
 using Shaders;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using Zenject;
 
-namespace _old.Components
+namespace _current.Components
 {
     public class PlayerRotation : PawnComponent<PlayerPawn>
     {
@@ -36,11 +36,20 @@ namespace _old.Components
             _crosshairImage = crosshair.GetComponent<RectTransform>();
         }
         
-        public override void SetupPlayerInput()
+        public override void BindPlayerInput()
         {
+            if (_pawn.PlayerControls == null) return;
+
             _pawn.PlayerControls.Player.Rotation.performed += AssignRotation;
             _weaponAimConstraint.data.sourceObjects.SetTransform(0, _targetTransform);
             _pawn.BuildRig();
+        }
+
+        public override void UnbindPlayerInput()
+        {
+            if (_pawn.PlayerControls == null) return;
+
+            _pawn.PlayerControls.Player.Rotation.performed -= AssignRotation;
         }
 
         private void AssignRotation(InputAction.CallbackContext ctx)
@@ -142,12 +151,6 @@ namespace _old.Components
         {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, _rotationInput * 2);
-        }
-
-        public override void Dispose()
-        {
-            _pawn.PlayerControls.Player.Rotation.performed -= AssignRotation;
-            base.Dispose();
         }
     }
 }
