@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _current.Data
+namespace _current.Systems.WeaponSystem.Configs
 {
     [CreateAssetMenu(fileName = "Trail Config", menuName = "Guns/Trail Configuration", order = 4)]
     public class TrailConfiguration : ScriptableObject

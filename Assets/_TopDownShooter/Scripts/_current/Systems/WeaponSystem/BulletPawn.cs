@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using _current.Data;
+using _current.Systems.WeaponSystem.Data;
 using UnityEngine;
 
-namespace _current.Weapon
+namespace _current.Systems.WeaponSystem
 {
     [RequireComponent(typeof(Rigidbody))]
     public class BulletPawn : MonoBehaviour

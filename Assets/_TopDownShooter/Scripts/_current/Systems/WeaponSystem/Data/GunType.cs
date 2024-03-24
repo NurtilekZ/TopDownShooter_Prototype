@@ -1,4 +1,4 @@
-﻿namespace _current.Data
+﻿namespace _current.Systems.WeaponSystem.Data
 {
     public enum GunType
     {

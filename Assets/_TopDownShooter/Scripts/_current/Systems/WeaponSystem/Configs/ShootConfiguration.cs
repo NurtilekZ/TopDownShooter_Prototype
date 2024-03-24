@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _current.Data
+namespace _current.Systems.WeaponSystem.Configs
 {
     [CreateAssetMenu(fileName = "Shoot Config", menuName = "Guns/Gun Configuration", order = 2)]
     public class ShootConfiguration : ScriptableObject
