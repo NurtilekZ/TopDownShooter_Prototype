@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using _current.Components;
-using _current.Player;
+using _current.Units.Components;
+using _current.Units.Player;
 using UnityEngine;
 using Zenject;
 

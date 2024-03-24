@@ -1,4 +1,4 @@
-﻿using _current.Weapon;
+﻿using _current.Systems.WeaponSystem;
 using UnityEngine;
 using Zenject;
 
@@ -8,17 +8,10 @@ namespace _current.Installers
     {
         [SerializeField] private Transform _weaponAttachPoint;
         [SerializeField] private Transform _targetPoint;
-        [SerializeField] private WeaponPawn _weaponPawn;
 
         public override void InstallBindings()
         {
-            var weaponView = Container.InstantiatePrefabForComponent<WeaponPawn>(
-                _weaponPawn,
-                _weaponAttachPoint.position,
-                _weaponAttachPoint.rotation,
-                _weaponAttachPoint);
 
-            Container.BindInstance(weaponView).AsSingle();
         }
     }
 }

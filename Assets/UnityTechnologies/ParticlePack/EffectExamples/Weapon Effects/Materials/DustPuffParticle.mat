@@ -78,7 +78,7 @@ Material:
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
-    - _CameraNearFadeDistance: 1
+    - _CameraNearFadeDistance: 0.01
     - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0.358
@@ -86,7 +86,7 @@ Material:
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
-    - _DistortionStrengthScaled: 0
+    - _DistortionStrengthScaled: 0.1
     - _DstBlend: 10
     - _EmissionEnabled: 1
     - _FlipbookBlending: 0
@@ -114,7 +114,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
+    - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmisColor: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 0}
