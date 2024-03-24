@@ -27,9 +27,9 @@ Material:
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
-    - _Angle: 0
-    - _Arc1: 15
-    - _Arc2: 15
+    - _Angle: 269
+    - _Arc1: 122
+    - _Arc2: 127
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 1, b: 0.3019607, a: 0.5372549}
   m_BuildTextureStacks: []

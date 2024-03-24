@@ -4352,7 +4352,7 @@ MonoBehaviour:
   _onLandAudioVolume: 0.5
   _preLandingHeight: 0
   _jumpHeight: 1.2
-  _gravity: 0
+  _gravity: -15
   _jumpTimeout: 0.5
   _fallTimeout: 0.15
   _isGrounded: 1
