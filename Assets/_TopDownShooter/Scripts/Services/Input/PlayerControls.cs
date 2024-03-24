@@ -82,6 +82,15 @@ namespace Services.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b60a1de-e10b-4e7a-975f-a6a4c63b55df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -201,7 +210,7 @@ namespace Services.Input
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -212,7 +221,7 @@ namespace Services.Input
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -223,7 +232,7 @@ namespace Services.Input
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -231,10 +240,10 @@ namespace Services.Input
                 {
                     ""name"": """",
                     ""id"": ""15a37260-fd20-47b1-a1bb-3b98398e88fd"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -258,6 +267,28 @@ namespace Services.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Walking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebeec78e-e0b5-4b12-87b1-b3c626ee7445"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7a7b8af-ff49-4461-bfbc-90b757165e1a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -302,6 +333,7 @@ namespace Services.Input
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Walking = m_Player.FindAction("Walking", throwIfNotFound: true);
+            m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -369,6 +401,7 @@ namespace Services.Input
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Walking;
+        private readonly InputAction m_Player_Reload;
         public struct PlayerActions
         {
             private @PlayerControls m_Wrapper;
@@ -379,6 +412,7 @@ namespace Services.Input
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputAction @Walking => m_Wrapper.m_Player_Walking;
+            public InputAction @Reload => m_Wrapper.m_Player_Reload;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -406,6 +440,9 @@ namespace Services.Input
                 @Walking.started += instance.OnWalking;
                 @Walking.performed += instance.OnWalking;
                 @Walking.canceled += instance.OnWalking;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -428,6 +465,9 @@ namespace Services.Input
                 @Walking.started -= instance.OnWalking;
                 @Walking.performed -= instance.OnWalking;
                 @Walking.canceled -= instance.OnWalking;
+                @Reload.started -= instance.OnReload;
+                @Reload.performed -= instance.OnReload;
+                @Reload.canceled -= instance.OnReload;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -471,6 +511,7 @@ namespace Services.Input
             void OnJump(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
             void OnWalking(InputAction.CallbackContext context);
+            void OnReload(InputAction.CallbackContext context);
         }
     }
 }
