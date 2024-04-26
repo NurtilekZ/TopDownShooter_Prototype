@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: 
+  m_GroupName: UI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ea185a2559582624d8dfa4b51f44311f
+  m_SerializeEntries:
+  - m_GUID: 3e32fb280ee435a419ae39eda7c5afb9
+    m_Address: GameHUDScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5662ccd9cde191e4d9939efa7638d220
+    m_Address: MainMenuScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db00a09248e86f9478e06670ed11366d
+    m_Address: LoadingScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3036358629638e4e896a052c725697d
+    m_Address: GameOverScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8003916895b1564e817817cfde4f336
+    m_Address: PauseScreen
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8774b0b0b912d7e428442ab1bcf9d08c
+    m_Address: InputPrompts
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e3b12fe5d4e43947b20072e98cd61eb
+    m_Address: RootCanvas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a4dd692f451b0445a48c17e9649ffaa
+    m_Address: OneButtonPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 950c04c2434402a429f4748e739a1103
+    m_Address: TwoButtonPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99ea13fa4ba20d84e98a298f23f99547
+    m_Address: HealthOverlay
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cbb92b569c1a09c44b8cfefb04f933be, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 447d74c4673a19c4dbb8e3514827b2fe, type: 2}
+    - {fileID: 11400000, guid: 7bbf07331c308644a8675c4ca2e978b4, type: 2}

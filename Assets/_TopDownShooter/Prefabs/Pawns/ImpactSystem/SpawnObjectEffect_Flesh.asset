@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4121394ff9541799903cf6b9b0a0a10, type: 3}
+  m_Name: SpawnObjectEffect_Flesh
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 8490005951290238414, guid: e6a1624f9dede7a41b82b0a69fcbee7f, type: 3}
+  Probability: 1
+  RandomizeRotation: 0
+  RandomizedRotationMultiplier: {x: 0, y: 0, z: 0}

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4121394ff9541799903cf6b9b0a0a10, type: 3}
+  m_Name: SpawnObjectEffect_Metal
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 4519192477583887125, guid: 3438e2ce9a951cb4ba43d136b016334e, type: 3}
+  Probability: 1
+  RandomizeRotation: 0
+  RandomizedRotationMultiplier: {x: 0, y: 0, z: 0}

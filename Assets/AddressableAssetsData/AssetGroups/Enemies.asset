@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Enemies
+  m_EditorClassIdentifier: 
+  m_GroupName: Enemies
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6f900af41851d9e4b9cf7387c497a985
+  m_SerializeEntries:
+  - m_GUID: 0f8fbf9963db31a42a5870d681b53613
+    m_Address: robot_range
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 3D
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fa978c1caeecf64d8942da5df30fa8f
+    m_Address: robot_melee
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 3D
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f141276334accc4c8e442a282d54f7f
+    m_Address: Spider
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 3D
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a74e841304b2bf4ea6b869e985e5a23
+    m_Address: SpawnPoint
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 3D
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cbb92b569c1a09c44b8cfefb04f933be, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1b01bc699552cf441bd3682fe41a890a, type: 2}
+    - {fileID: 11400000, guid: 29b44df0cf1cf9f459d441a13396b592, type: 2}

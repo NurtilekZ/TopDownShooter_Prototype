@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956d59270fd64112bc590b1149cbc80c, type: 3}
+  m_Name: HeroData
+  m_EditorClassIdentifier: 
+  Hp: 150
+  activeWeapon: 1
+  Prefab: {fileID: 698313671658902409, guid: 7f9b56fe116a9ba49b662eeb597aa81e, type: 3}
+  PlayerVirtualCamera: {fileID: 1364434566503605110, guid: 5fe3701742f0a634e9ebe17c5d73e1cd,
+    type: 3}
+  GroupComposer: {fileID: 5239219140342785604, guid: 62513850e4ef1534fbe6344602589acb,
+    type: 3}
