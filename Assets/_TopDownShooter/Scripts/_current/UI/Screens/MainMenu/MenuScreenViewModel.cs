@@ -1,7 +1,7 @@
-﻿using _current.Infrastructure.AssetManagement;
-using _current.Infrastructure.SceneManagement;
+﻿using System.Linq;
+using _current.Infrastructure.AssetManagement;
 using _current.Infrastructure.States;
-using _current.StaticData;
+using _current.Services.StaticData;
 using _current.StaticData.ScriptableObjects;
 using _current.UI.Core.MVVM;
 
@@ -13,26 +13,26 @@ namespace _current.UI.Screens.MainMenu
         public string AssetPath => AssetsPath.MainMenuScreen;
 
         private readonly GameStateMachine _gameStateMachine;
-        private readonly LevelStaticData _levelStaticData;
-        private SceneName _selectedLevel;
+        private readonly IStaticDataService _staticDataService;
+        private LevelStaticData _selectedLevel;
 
-        public MenuScreenViewModel(GameStateMachine gameStateMachine, LevelStaticData levelStaticData)
+        public MenuScreenViewModel(GameStateMachine gameStateMachine, IStaticDataService staticDataService)
         {
             _gameStateMachine = gameStateMachine;
-            _levelStaticData = levelStaticData;
+            _staticDataService = staticDataService;
         }
 
         public void StartNewGame()
         {
-            _gameStateMachine.Enter<LoadLevelState, LevelStaticData>(_levelStaticData);
+            _gameStateMachine.Enter<LoadLevelState, LevelStaticData>(_staticDataService.GetAllLevels.First());
         }
 
         public void ContinueGame()
         {
-            _gameStateMachine.Enter<LoadLevelState, LevelStaticData>(_levelStaticData);
+            _gameStateMachine.Enter<LoadLevelState, LevelStaticData>(_staticDataService.GetAllLevels.First());
         }
 
-        public void SelectLevel(SceneName level)
+        public void SelectLevel(LevelStaticData level)
         {
             _selectedLevel = level;
         }

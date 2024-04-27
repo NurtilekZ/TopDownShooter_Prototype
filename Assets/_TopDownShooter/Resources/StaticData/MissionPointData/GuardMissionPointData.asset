@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdeac19cbe54dc787b748701f24785b, type: 3}
   m_Name: GuardMissionPointData
   m_EditorClassIdentifier: 
-  InterestPointType: 3
+  missionPointType: 3

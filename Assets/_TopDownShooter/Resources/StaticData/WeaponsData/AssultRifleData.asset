@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AssultRifleData
   m_EditorClassIdentifier: 
   ImpactType: {fileID: 11400000, guid: 940c0885712f5104887cd662123ba714, type: 2}
-  WeaponTypeId: 0
+  WeaponTypeId: 1
   Name: AR-302
   PrefabAsset:
     m_AssetGUID: af52686d75a61bc4084e774b92916ed1

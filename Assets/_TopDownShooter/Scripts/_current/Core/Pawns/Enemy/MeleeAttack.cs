@@ -16,7 +16,7 @@ namespace _current.Core.Pawns.Enemy
         [SerializeField] private float _attackRadius = 1f;
         [SerializeField] private int _layerMask;
         [SerializeField] private float _effectiveDistance = 0.5f;
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private PawnAnimationHandler _animationHandler;
         [SerializeField] private Transform _target;
 
         private float _attackCooldownTimeout;

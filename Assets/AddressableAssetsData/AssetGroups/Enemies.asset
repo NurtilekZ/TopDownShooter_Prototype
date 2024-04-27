@@ -30,7 +30,7 @@ MonoBehaviour:
     - 3D
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6f141276334accc4c8e442a282d54f7f
-    m_Address: Spider
+    m_Address: Small Spider
     m_ReadOnly: 0
     m_SerializedLabels:
     - 3D
@@ -40,6 +40,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - 3D
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 390f20b98f948c842ad2c70325d1df48
+    m_Address: Big Spider
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cbb92b569c1a09c44b8cfefb04f933be, type: 2}

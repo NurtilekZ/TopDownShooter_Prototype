@@ -10,9 +10,11 @@ namespace _current.Core.Logic.MissionPointSpawners
     {
         [SerializeField] private EnemyDeath _enemyDeath;
 
-        public override void Initialize(MissionPointSpawnerStaticData staticData)
+        public override MissionPointType MissionType => MissionPointType.Destroy;
+
+        public override void Initialize(ObjectiveSpawnerLevelData levelData)
         {
-            base.Initialize(staticData);
+            base.Initialize(levelData);
             _enemyDeath.OnDeath += OnDeath;
         }
 

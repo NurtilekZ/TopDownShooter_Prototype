@@ -9,7 +9,7 @@ namespace _current.Core.Pawns.Components
     public abstract class PawnDeath : PawnComponent
     {
         [SerializeField] private PawnHealth _health;
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private AnimationHandlerBase _animationHandler;
         [SerializeField] private GameObject _deathFx;
         
         protected readonly ReactiveProperty<bool> _isDead = new(false);
@@ -39,7 +39,7 @@ namespace _current.Core.Pawns.Components
             OnDeath?.Invoke(this);
             _animationHandler.PlayDeath();
             if (_deathFx) 
-                Instantiate(_deathFx, transform.position, quaternion.identity);
+                Instantiate(_deathFx, transform);
         }
 
         [ContextMenu("Revive")]

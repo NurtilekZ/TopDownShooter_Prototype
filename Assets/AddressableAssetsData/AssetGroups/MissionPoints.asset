@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: MissionPoints
+  m_EditorClassIdentifier: 
+  m_GroupName: MissionPoints
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 198556d21e022a145b997aa4c9a81d60
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cbb92b569c1a09c44b8cfefb04f933be, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1f24c133ecaad634eb1847b8ca041291, type: 2}
+    - {fileID: 11400000, guid: 93298af54c54cfa4a814df80b3a175de, type: 2}

@@ -23,12 +23,12 @@ namespace Editor
 
             if (GUILayout.Button("Collect"))
             {
-                levelData.MissionPointSpawners = FindObjectsOfType<MissionPointMarker>()
-                    .Select(x=> new MissionPointSpawnerStaticData(x.GetComponent<UniqueId>().Id, x.missionPointType, x.transform.position))
+                levelData.ObjectiveSpawners = FindObjectsOfType<MissionPointMarker>()
+                    .Select(x=> new ObjectiveSpawnerLevelData(x.GetComponent<UniqueId>().Id, x.missionPointType, x.transform.position))
                     .ToList();
                 
                 levelData.EnemySpawners = FindObjectsOfType<EnemySpawnMarker>()
-                    .Select(x=> new EnemySpawnerStaticData(x.GetComponent<UniqueId>().Id, x.EnemyType, x.transform.position))
+                    .Select(x=> new EnemySpawnerLevelData(x.EnemyType, x.transform.position))
                     .ToList();
 
                 levelData.LevelKey = SceneManager.GetActiveScene().name;

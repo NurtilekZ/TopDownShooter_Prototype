@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using _current.Core.Pawns.Components;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,14 +15,15 @@ namespace _current.Core.Pawns.Enemy
 
         protected override void Die()
         {
-            _agent.enabled = false;
-            StartCoroutine(DestroyTimer());
+            if (_agent != null) 
+                _agent.enabled = false;
+            DestroyTimer();
             base.Die();
         }
 
-        private IEnumerator DestroyTimer()
+        private async void DestroyTimer()
         {
-            yield return new WaitForSeconds(_destroyDelayTime);
+            await UniTask.WaitForSeconds(_destroyDelayTime);
             transform
                 .DOMoveY(_deathPositionY, _destroyDelayTime)
                 .OnComplete(() => Destroy(gameObject));

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _current.Core.Pawns.LootSystem;
 using _current.Core.Systems.WeaponSystem.Data;
 using _current.Data;
@@ -6,6 +7,9 @@ using _current.Data.Data;
 using _current.Services.Economy;
 using _current.Services.PersistentData;
 using _current.Services.SaveLoad;
+using _current.Services.StaticData;
+using _current.Services.UI;
+using _current.UI.Screens.Loading;
 using UniRx;
 
 namespace _current.Infrastructure.States
@@ -16,14 +20,20 @@ namespace _current.Infrastructure.States
         private readonly IEconomyService _economyService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _persistentDataService;
+        private readonly IUIService _uiService;
+        private IStaticDataService _staticDataService;
 
 
         public LoadProgressState(
             GameStateMachine stateMachine,
             IEconomyService economyService,
             ISaveLoadService saveLoadService,
+            IUIService uiService, 
+            IStaticDataService staticDataService,
             IPersistentDataService persistentDataService)
         {
+            _staticDataService = staticDataService;
+            _uiService = uiService;
             _stateMachine = stateMachine;
             _economyService = economyService;
             _saveLoadService = saveLoadService;
@@ -40,7 +50,7 @@ namespace _current.Infrastructure.States
 
         public void Exit()
         {
-            
+            _uiService.Close<LoadingScreenViewModel>();
         }
 
         private async void LoadProgressOrInitNew()
@@ -80,11 +90,13 @@ namespace _current.Infrastructure.States
                 DebugEnabled = true,
             };
 
-        private PlayerProgressData NewProgress() =>
-            new()
+        private PlayerProgressData NewProgress()
+        {
+            return new PlayerProgressData
             {
-                CurrentWeapons = new WeaponData[] { new(WeaponTypeId.AssaultRifle,30,120) },
-                CompletedStages = new HashSet<string>()
+                AvailableWeapons = new WeaponData[] { new(PrimaryWeaponTypeId.AssaultRifle, 30, 120) },
+                LevelsProgress = new LevelData[_staticDataService.GetAllLevels.Count],
             };
+        }
     }
 }

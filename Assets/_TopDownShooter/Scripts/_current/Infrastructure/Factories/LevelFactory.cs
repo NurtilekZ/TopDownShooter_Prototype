@@ -12,8 +12,6 @@ namespace _current.Infrastructure.Factories
 {
     public class LevelFactory : ILevelFactory
     {
-        private const string EnemySpawnerPrefabId = "EnemySpawner";
-        
         private readonly DiContainer _container;
         private readonly IAssetProvider _assetProvider;
         private readonly IStaticDataService _staticDataService;
@@ -28,19 +26,19 @@ namespace _current.Infrastructure.Factories
 
         public async Task WarmUp()
         {
-            await _assetProvider.Load<GameObject>(EnemySpawnerPrefabId);
+            await _assetProvider.Load<GameObject>(AssetsPath.SpawnPoint);
         }
 
 
         public void CleanUp()
         {
-            _assetProvider.Release(EnemySpawnerPrefabId);
+            _assetProvider.Release(AssetsPath.SpawnPoint);
         }
 
-        public async Task<EnemySpawner> CreateSpawner(EnemySpawnerStaticData spawnerData)
+        public async Task<EnemySpawner> CreateSpawner(EnemySpawnerLevelData spawnerData)
         {
             var config = _staticDataService.ForEnemy(spawnerData.EnemyType);
-            var prefab = await _assetProvider.Load<GameObject>(EnemySpawnerPrefabId);
+            var prefab = await _assetProvider.Load<GameObject>(config.EnemyTypeId.ToString());
             var spawner = Object.Instantiate(prefab, spawnerData.Position, Quaternion.identity).GetComponent<EnemySpawner>();
             
             _container.Inject(spawner);
@@ -50,11 +48,11 @@ namespace _current.Infrastructure.Factories
             return spawner;
         }
 
-        public async Task<IMissionPointBase> CreateMissionPoint(MissionPointSpawnerStaticData missionPointSpawnerStaticData)
+        public async Task<IMissionPointBase> CreateMissionPoint(ObjectiveSpawnerLevelData objectiveSpawnerLevelData)
         {
-            var config = _staticDataService.ForMissionPoint(missionPointSpawnerStaticData.MissionPointType);
-            var prefab = await _assetProvider.Load<GameObject>(EnemySpawnerPrefabId);
-            var interestPoint = Object.Instantiate(prefab, missionPointSpawnerStaticData.Position, Quaternion.identity).GetComponent<IMissionPointBase>();
+            var config = _staticDataService.ForMissionPoint(objectiveSpawnerLevelData.MissionPointType);
+            var prefab = await _assetProvider.Load<GameObject>(config.MissionPointType.ToString());
+            var interestPoint = Object.Instantiate(prefab, objectiveSpawnerLevelData.Position, Quaternion.identity).GetComponent<IMissionPointBase>();
             
             _container.Inject(interestPoint);
             

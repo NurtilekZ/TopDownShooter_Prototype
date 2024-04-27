@@ -19,9 +19,9 @@ namespace _current.Services.StaticData
         ItemStaticData ForInventoryItem(LootTypeId itemKey);
         List<ItemStaticData> GetAllItems { get; }
 
-        MissionPointSpawnerStaticData ForMissionPoint(MissionPointType missionPointType);
+        ObjectiveSpawnerLevelData ForMissionPoint(MissionPointType missionPointType);
         HeroStaticData ForHero();
         EnemyStaticData ForEnemy(EnemyTypeId enemyType);
-        WeaponStaticData ForWeapon(WeaponTypeId weaponTypeId);
+        WeaponStaticData ForWeapon(PrimaryWeaponTypeId primaryWeaponTypeId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using _current.Infrastructure.Factories.Interfaces;
+﻿using _current.Infrastructure.AssetManagement;
+using _current.Infrastructure.Factories.Interfaces;
 using _current.Services.LevelProgress;
 
 namespace _current.Infrastructure.States
@@ -11,6 +12,7 @@ namespace _current.Infrastructure.States
         private readonly ILootFactory _lootFactory;
         private readonly ILevelProgressService _levelProgressService;
         private readonly GameStateMachine _stateMachine;
+        private IUIFactory _uiFactory;
 
         public GameLoopState(
             GameStateMachine stateMachine,
@@ -18,8 +20,10 @@ namespace _current.Infrastructure.States
             IWeaponFactory weaponFactory,
             IEnemyFactory enemyFactory,
             ILootFactory lootFactory,
+            IUIFactory uiFactory,
             ILevelProgressService levelProgressService)
         {
+            _uiFactory = uiFactory;
             _stateMachine = stateMachine;
             _heroFactory = heroFactory;
             _lootFactory = lootFactory;
@@ -28,13 +32,18 @@ namespace _current.Infrastructure.States
             _weaponFactory = weaponFactory;
         }
 
-        public void Enter()
+        public async void Enter()
         {
-            
+            await _uiFactory.WarmUpForState(new []
+            {
+                AssetsPath.GameHUDScreen,
+                AssetsPath.GameOverScreen,
+            });
         }
 
         public void Exit()
         {
+            _uiFactory.CleanUpForState();
             _heroFactory.CleanUp();
             _weaponFactory.CleanUp();
             _enemyFactory.CleanUp();

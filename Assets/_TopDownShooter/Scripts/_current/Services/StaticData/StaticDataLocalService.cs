@@ -29,10 +29,10 @@ namespace _current.Services.StaticData
         
         private HeroStaticData _heroStaticData;
         private Dictionary<string, LevelStaticData> _levels;
-        private Dictionary<WeaponTypeId, WeaponStaticData> _weapons;
+        private Dictionary<PrimaryWeaponTypeId, WeaponStaticData> _weapons;
         private Dictionary<LootTypeId, ItemStaticData> _items;
         private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
-        private Dictionary<MissionPointType, MissionPointSpawnerStaticData> _interestPoints;
+        private Dictionary<MissionPointType, ObjectiveSpawnerLevelData> _interestPoints;
 
         public event Action Initialized;
 
@@ -62,7 +62,7 @@ namespace _current.Services.StaticData
         public ItemStaticData ForInventoryItem(LootTypeId itemKey) => 
             _items.GetValueOrDefault(itemKey);
 
-        public MissionPointSpawnerStaticData ForMissionPoint(MissionPointType missionPointType) => 
+        public ObjectiveSpawnerLevelData ForMissionPoint(MissionPointType missionPointType) => 
             _interestPoints.GetValueOrDefault(missionPointType);
 
         public HeroStaticData ForHero() => 
@@ -71,8 +71,8 @@ namespace _current.Services.StaticData
         public EnemyStaticData ForEnemy(EnemyTypeId enemyType) => 
             _enemies.GetValueOrDefault(enemyType);
 
-        public WeaponStaticData ForWeapon(WeaponTypeId weaponTypeId) => 
-            _weapons.GetValueOrDefault(weaponTypeId);
+        public WeaponStaticData ForWeapon(PrimaryWeaponTypeId primaryWeaponTypeId) => 
+            _weapons.GetValueOrDefault(primaryWeaponTypeId);
 
         private async Task LoadHero()
         {
@@ -89,7 +89,7 @@ namespace _current.Services.StaticData
 
         private void LoadWeapons() =>
             _weapons = Resources.LoadAll<WeaponStaticData>(WeaponsDataPath)
-                .ToDictionary(x => x.WeaponTypeId, x => x);
+                .ToDictionary(x => x.primaryWeaponTypeId, x => x);
 
         private void LoadItems() =>
             _items = Resources.LoadAll<ItemStaticData>(ItemsDataPath)

@@ -21,7 +21,7 @@ namespace _current.Core.Pawns.Player
         [SerializeField] private MultiAimConstraint _weaponAimConstraint;
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private AnimationRigHandler _animationRig;
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private PawnAnimationHandler _animationHandler;
 
         [field: SerializeField] public bool IsRotating { get; private set; }
         public Transform TargetTransform => _targetTransform;

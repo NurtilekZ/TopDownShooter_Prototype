@@ -14,7 +14,7 @@ namespace _current.StaticData.ScriptableObjects
         [JsonConverter(typeof(Vector3))] 
         public Vector3 PlayerSpawnPoint;
 
-        public List<MissionPointSpawnerStaticData> MissionPointSpawners = new();
-        public List<EnemySpawnerStaticData> EnemySpawners = new();
+        public List<ObjectiveSpawnerLevelData> ObjectiveSpawners = new();
+        public List<EnemySpawnerLevelData> EnemySpawners = new();
     }
 }

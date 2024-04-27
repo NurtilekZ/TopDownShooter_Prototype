@@ -17,9 +17,10 @@ namespace _current.Core.Pawns.Player
     [DisallowMultipleComponent]
     public class PlayerWeaponSpawner : AbstractDamageSender
     {
-        [SerializeField] private WeaponTypeId _primaryWeapon;
+        [SerializeField] private PrimaryWeaponTypeId _primaryWeapon;
+        [SerializeField] private SecondaryWeaponTypeId _secondaryWeapon;
         [SerializeField] private Transform _gunHolder;
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private PawnAnimationHandler _animationHandler;
         [SerializeField] private AnimationRigHandler _animationRigHandler;
         [SerializeField] private bool _autoReload;
         [SerializeField] private bool _isReloading;
@@ -133,7 +134,7 @@ namespace _current.Core.Pawns.Player
 
         private async void Spawn()
         {
-            foreach (var weaponData in _persistentDataService.Progress.CurrentWeapons)
+            foreach (var weaponData in _persistentDataService.Progress.AvailableWeapons)
             {
                 activeWeapon = await _factory.Create(this, _gunHolder, weaponData);
 

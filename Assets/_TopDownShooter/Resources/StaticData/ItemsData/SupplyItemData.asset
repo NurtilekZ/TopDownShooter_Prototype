@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015e772fab920834b8d053f463a684f5, type: 3}
   m_Name: SupplyItemData
   m_EditorClassIdentifier: 
-  ItemId: 1
+  ItemId: 2
   Title: Supplies
   Description: Supplies can restore your health and ammo
   MaxCount: 0

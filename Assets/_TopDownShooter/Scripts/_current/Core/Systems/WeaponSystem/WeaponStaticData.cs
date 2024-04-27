@@ -12,7 +12,7 @@ namespace _current.Core.Systems.WeaponSystem
     public class WeaponStaticData : ScriptableObject
     {
         public ImpactType ImpactType;
-        public WeaponTypeId WeaponTypeId;
+        public PrimaryWeaponTypeId primaryWeaponTypeId;
         public string Name;
         public AssetReferenceGameObject PrefabAsset;
         public Vector3 SpawnPoint;

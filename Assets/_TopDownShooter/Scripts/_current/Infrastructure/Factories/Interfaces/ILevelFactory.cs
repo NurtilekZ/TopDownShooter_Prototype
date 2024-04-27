@@ -7,7 +7,7 @@ namespace _current.Infrastructure.Factories.Interfaces
 {
     public interface ILevelFactory : IFactory
     {
-        Task<EnemySpawner> CreateSpawner(EnemySpawnerStaticData spawnerData);
-        Task<IMissionPointBase> CreateMissionPoint(MissionPointSpawnerStaticData missionPointSpawner);
+        Task<EnemySpawner> CreateSpawner(EnemySpawnerLevelData spawnerData);
+        Task<IMissionPointBase> CreateMissionPoint(ObjectiveSpawnerLevelData objectiveSpawner);
     }
 }

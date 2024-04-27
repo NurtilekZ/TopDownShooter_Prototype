@@ -78,11 +78,11 @@ namespace _current.Infrastructure.States
 
         private async Task InitGameWorld()
         {
-            await SetupInterestPoints();
 
             _levelProgressData.Hero = await SetupHero();
             await SetupPlayerCamera(_levelProgressData.Hero);
             await SetupEnemySpawner();
+            await SetupInterestPoints();
         }
 
         private async Task InitUI()
@@ -110,7 +110,7 @@ namespace _current.Infrastructure.States
 
         private async Task SetupInterestPoints()
         {
-            foreach (var interestPoint in _pendingLevelStaticData.MissionPointSpawners)
+            foreach (var interestPoint in _pendingLevelStaticData.ObjectiveSpawners)
             {
                 await _levelFactory.CreateMissionPoint(interestPoint);
             }

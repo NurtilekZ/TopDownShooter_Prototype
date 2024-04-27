@@ -10,7 +10,7 @@ namespace _current.Core.Pawns.Enemy
     public class AgentMoveToPlayer : PawnComponent
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private PawnAnimationHandler _animationHandler;
         [SerializeField] private Transform _target;
         [SerializeField] private float _minDistance = 1f;
         [SerializeField] private float _dampTime = 0.1f;

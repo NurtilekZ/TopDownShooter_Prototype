@@ -21,6 +21,12 @@ namespace _current.Services.UI
 
         public async Task Open(IViewModel viewModel)
         {
+            if (_views.TryGetValue(viewModel, out var cachedView))
+            {
+                cachedView.ShowAndBind(viewModel);
+                return;
+            }
+
             var newView = await _factory.GetOrCreateView(viewModel);
             newView.ShowAndBind(viewModel);
             _views[viewModel] = newView;

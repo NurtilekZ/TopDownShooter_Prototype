@@ -33,10 +33,10 @@ namespace _current.Services.StaticData
         private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
         private Dictionary<string, LevelStaticData> _stages;
         private Dictionary<LootTypeId, ItemStaticData> _items;
-        private Dictionary<WeaponTypeId, WeaponStaticData> _weapons;
+        private Dictionary<PrimaryWeaponTypeId, WeaponStaticData> _weapons;
         private HeroStaticData _heroStaticData;
         private TaskCompletionSource<ConfigResponse> _fetchCompletionSource;
-        private Dictionary<MissionPointType, MissionPointSpawnerStaticData> _interestPoints;
+        private Dictionary<MissionPointType, ObjectiveSpawnerLevelData> _interestPoints;
 
         public event Action Initialized;
         
@@ -97,11 +97,11 @@ namespace _current.Services.StaticData
         public EnemyStaticData ForEnemy(EnemyTypeId enemyType) => 
             _enemies.GetValueOrDefault(enemyType);
 
-        public MissionPointSpawnerStaticData ForMissionPoint(MissionPointType missionPointType) => 
+        public ObjectiveSpawnerLevelData ForMissionPoint(MissionPointType missionPointType) => 
             _interestPoints.GetValueOrDefault(missionPointType);
 
-        public WeaponStaticData ForWeapon(WeaponTypeId weaponTypeId) => 
-            _weapons.GetValueOrDefault(weaponTypeId);
+        public WeaponStaticData ForWeapon(PrimaryWeaponTypeId primaryWeaponTypeId) => 
+            _weapons.GetValueOrDefault(primaryWeaponTypeId);
 
         private void OnRemoteConfigLoaded(ConfigResponse configResponse)
         {
@@ -152,7 +152,7 @@ namespace _current.Services.StaticData
             _weapons = (DeserializeObject<List<WeaponStaticData>>(
                     RemoteConfigService.Instance.appConfig.GetJson(WeaponsList)
                 ) ?? new List<WeaponStaticData>())
-                .ToDictionary(e => e.WeaponTypeId, e => e);
+                .ToDictionary(e => e.primaryWeaponTypeId, e => e);
 
         private void LogConfigsResponseResult(ConfigResponse configResponse)
         {

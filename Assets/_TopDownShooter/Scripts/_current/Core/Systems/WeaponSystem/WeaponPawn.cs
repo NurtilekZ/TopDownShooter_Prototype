@@ -29,7 +29,7 @@ namespace _current.Core.Systems.WeaponSystem
         public Transform RigGripR => _rigGripR;
         public Transform RigGripL => _rigGripL;
         public IDamageSender Owner => _owner;
-        public WeaponTypeId WeaponTypeId => _weaponStaticData.WeaponTypeId;
+        public PrimaryWeaponTypeId PrimaryWeaponTypeId => _weaponStaticData.primaryWeaponTypeId;
         public float ReloadTime => _weaponStaticData.AmmoConfig.ReloadTime;
         public float MaxAmmo => _weaponStaticData.AmmoConfig.MaxAmmo;
         public float MaxClip => _weaponStaticData.AmmoConfig.ClipSize;

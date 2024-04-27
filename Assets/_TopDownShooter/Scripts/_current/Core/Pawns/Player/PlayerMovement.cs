@@ -20,7 +20,7 @@ namespace _current.Core.Pawns.Player
         [SerializeField] private float _footstepTimeout = 1.5f;
         [SerializeField] private Camera _camera;
         [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private PawnAnimationHandler _animationHandler;
         [SerializeField] private CharacterController _controller;
 
         [SerializeField] private  AudioClip[] _footstepAudioClips;

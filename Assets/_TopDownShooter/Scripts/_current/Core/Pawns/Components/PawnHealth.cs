@@ -7,7 +7,7 @@ namespace _current.Core.Pawns.Components
 {
     public abstract class PawnHealth : PawnComponent, IHealth
     {
-        [SerializeField] private AnimationHandler _animationHandler;
+        [SerializeField] private AnimationHandlerBase _animationHandler;
         [SerializeField] protected ReactiveProperty<float> _currentHealth = new(100f);
         [SerializeField] protected float _maxHealth = 100f;
         

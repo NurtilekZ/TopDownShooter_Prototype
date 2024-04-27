@@ -6,18 +6,15 @@ namespace _current.Core.Logic.MissionPointSpawners
 {
     public abstract class MissionPointBase : MonoBehaviour, IMissionPointBase
     {
-        [SerializeField] protected MissionPointType _missionType;
-        [SerializeField] protected ReactiveProperty<bool> _isComplete = new();
-        private MissionPointSpawnerStaticData _missionPointSpawnerStaticData;
-
-
-        public IReadOnlyReactiveProperty<bool> IsComplete => _isComplete;
-
-        public MissionPointType MissionType => _missionType;
+        protected readonly ReactiveProperty<bool> _isComplete = new();
+        private ObjectiveSpawnerLevelData _levelData;
         
-        public virtual void Initialize(MissionPointSpawnerStaticData staticData)
+        public IReadOnlyReactiveProperty<bool> IsComplete => _isComplete;
+        public virtual MissionPointType MissionType => MissionPointType.Destroy;
+        
+        public virtual void Initialize(ObjectiveSpawnerLevelData levelData)
         {
-            _missionPointSpawnerStaticData = staticData;
+            _levelData = levelData;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace _current.Core.Pawns.LootSystem
     {
         Ammo,
         AidKit,
+        Supply
     }
 
     [Serializable]

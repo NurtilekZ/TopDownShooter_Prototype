@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using _current.Infrastructure.AssetManagement;
 using _current.Infrastructure.Factories.Interfaces;
 using _current.Services;
 using _current.Services.UI;
@@ -19,10 +21,10 @@ namespace _current.Infrastructure.States
             IUIService uiService,
             List<IInitializableAsync> initializableServices)
         {
-            _uiService = uiService;
             _stateMachine = stateMachine;
             _initializableServices = initializableServices;
             _uiFactory = uiFactory;
+            _uiService = uiService;
         }
 
         public async void Enter()
@@ -30,16 +32,20 @@ namespace _current.Infrastructure.States
             foreach (var service in _initializableServices) 
                 await service.InitializeAsync();
             
-            await _uiFactory.WarmUp();
-            InitRootUI();
+            await InitRootUI();
             
             _stateMachine.Enter<LoadProgressState>();
         }
 
-        private void InitRootUI()
+        private async Task InitRootUI()
         {
-            _uiFactory.CreateRootCanvas();
-            _uiService.Open(new LoadingScreenViewModel(null));
+            await _uiFactory.WarmUpForState(new []
+            {
+                AssetsPath.RootCanvas,
+                AssetsPath.LoadingScreen,
+            });
+            await _uiFactory.CreateRootCanvas();
+            await _uiService.Open(new LoadingScreenViewModel(null));
         }
 
         public void Exit()

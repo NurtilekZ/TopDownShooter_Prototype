@@ -7,6 +7,6 @@ namespace _current.Core.Logic.MissionPointSpawners
     {
         IReadOnlyReactiveProperty<bool> IsComplete { get; }
         MissionPointType MissionType { get; }
-        void Initialize(MissionPointSpawnerStaticData staticData);
+        void Initialize(ObjectiveSpawnerLevelData levelData);
     }
 }

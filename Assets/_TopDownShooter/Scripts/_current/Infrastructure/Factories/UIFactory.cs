@@ -36,6 +36,8 @@ namespace _current.Infrastructure.Factories
             AssetsPath.TwoButtonPopup,
         };
 
+        private string[] _currentStateAssetPaths;
+
         public UIFactory(DiContainer container, IAssetProvider assetsProvider, IStaticDataService staticDataService)
         {
             _container = container;
@@ -62,10 +64,26 @@ namespace _current.Infrastructure.Factories
             _screens.Clear();
         }
 
+        public async Task WarmUpForState(string[] assetPaths)
+        {
+            _currentStateAssetPaths = assetPaths;
+            foreach (var assetPath in assetPaths)
+            {
+                await _assetsProvider.Load<GameObject>(assetPath);
+            }
+        }
+
+        public void CleanUpForState()
+        {
+            foreach (var assetPath in _currentStateAssetPaths) 
+                _assetsProvider.Release(assetPath);
+        }
+
         public async Task CreateRootCanvas()
         {
             var prefab = await _assetsProvider.Load<GameObject>(AssetsPath.RootCanvas);
             _rootCanvas = Object.Instantiate(prefab).GetComponent<RootCanvas>();
+            _rootCanvas.GetComponent<Canvas>().sortingOrder = 1;
             Object.DontDestroyOnLoad(_rootCanvas);
         }
 

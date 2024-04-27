@@ -30,7 +30,7 @@ namespace _current.Infrastructure.Installers
             Container.Bind<ILoggingService>().To<LoggingService>().AsSingle().NonLazy();
             Container.Bind<IInputService>().To<InputService>().AsSingle().NonLazy();
             Container.Bind<IUIService>().To<UIService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<StaticDataRemoteService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<StaticDataLocalService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<PersistentDataService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SaveLoadLocalService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EconomyLocalService>().AsSingle().NonLazy();

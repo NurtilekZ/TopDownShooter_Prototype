@@ -6,20 +6,23 @@ namespace _current.Services.Logging
 {
     public class LoggingService : ILoggingService
     {
-        private const string UIColor = "#e346b4";
-        private const string DefaultColor = "#e3e3e3";
-        private const string GameplayColor = "#4697e3";
-        private const string GameStateMachineColor = "#e38d46";
-        private const string InfrastructureColor = "#e38d46";
+        private const string UIColor = "#156ebd";
+        private const string DefaultColor = "#ffea00";
+        private const string GameplayColor = "#bd8a15";
+        private const string GameStateMachineColor = "#15b7bd";
+        private const string InfrastructureColor = "#50bd15";
+        
+        private const string WarningMessageColor = "#ffd000";
+        private const string ErrorMessageColor = "#ff0000";
 
         public void LogMessage(string message, object sender = null, LoggingTag loggingTag = LoggingTag.Logger) => 
             Debug.Log(GetString(message, sender ?? this, loggingTag));
 
         public void LogWarning(string message, object sender = null, LoggingTag loggingTag = LoggingTag.Logger) => 
-            Debug.Log(GetString(message, sender ?? this, loggingTag));
+            Debug.Log(GetString($"<color={WarningMessageColor}>{message}</c>", sender ?? this, loggingTag));
 
         public void LogError(string message, object sender = null, LoggingTag loggingTag = LoggingTag.Logger) => 
-            Debug.Log(GetString(message, sender ?? this, loggingTag));
+            Debug.Log(GetString($"<color={ErrorMessageColor}>{message}</c>", sender ?? this, loggingTag));
 
         private string GetString(string message, object sender, LoggingTag loggingTag)
         {
